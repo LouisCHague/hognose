@@ -1,0 +1,39 @@
+#!/bin/bash
+
+# hognose: Main script for the Hognose environment management system
+
+# Need PATH to activate/deactivate
+ORIGINAL_PATH=$PATH
+
+#################
+# Handle commands
+#################
+
+# NO COMMAND
+if [ "$#" = 0 ]; then
+   # Welcome message
+   echo "Usage: hognose <command>"
+   echo "Commands:"
+   echo "  create <name>  Create a new environment"
+   echo "  activate <name> Activate an existing environment"
+   echo "  help           Show this help message"
+fi
+
+# COMMAND PROVIDED
+COMMAND=$1
+
+case "$COMMAND" in
+    create)
+    shift
+    if [ $# -ge 1 ]; then
+        for PARAM in "$@" ; do
+            case $PARAM in
+                -n=*)
+                name=${PARAM#*=}
+                ;;
+            esac
+        done 
+        ./create_env.sh "$name"
+    fi
+    ;;
+esac
