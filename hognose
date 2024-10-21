@@ -2,9 +2,6 @@
 
 # hognose: Main script for the Hognose environment management system
 
-# Need PATH to activate/deactivate
-ORIGINAL_PATH=$PATH
-
 #################
 # Handle commands
 #################
@@ -23,6 +20,8 @@ fi
 COMMAND=$1
 
 case "$COMMAND" in
+
+    # Creates env folder
     create)
     shift
     if [ $# -ge 1 ]; then
@@ -34,6 +33,36 @@ case "$COMMAND" in
             esac
         done 
         ./create_env.sh "$name"
+    fi
+    ;;
+
+    # Activates the env
+    activate)
+    shift
+    if [ $# -ge 1 ]; then
+        for PARAM in "$@" ; do
+            case $PARAM in
+                -n=*)
+                name=${PARAM#*=}
+                ;;
+            esac
+        done
+        echo "source \"$name/activate.sh\""
+    fi
+    ;;
+
+    # Deactivates the env
+    deactivate)
+    shift
+    if [ $# -ge 1 ]; then
+        for PARAM in "$@" ; do
+            case $PARAM in
+                -n=*)
+                name=${PARAM#*=}
+                ;;
+            esac
+        done
+        echo "source \"$name/deactivate.sh\""
     fi
     ;;
 esac
