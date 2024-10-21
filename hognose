@@ -6,6 +6,9 @@
 # Handle commands
 #################
 
+# Location of the Hognose DIR
+HOG_DIR=$(dirname "$0")
+
 # NO COMMAND
 if [ "$#" = 0 ]; then
    # Welcome message
@@ -32,7 +35,7 @@ case "$COMMAND" in
                 ;;
             esac
         done 
-        ./create_env.sh "$name"
+        $HOG_DIR/create_env.sh "$name"
     fi
     ;;
 
@@ -47,7 +50,7 @@ case "$COMMAND" in
                 ;;
             esac
         done
-        echo "source \"$name/activate.sh\""
+        echo "source \"$HOG_DIR/$name/activate.sh\""
     fi
     ;;
 
@@ -62,7 +65,7 @@ case "$COMMAND" in
                 ;;
             esac
         done
-        echo "source \"$name/deactivate.sh\""
+        echo "source \"$HOG_DIR/$name/deactivate.sh\""
     fi
     ;;
 esac

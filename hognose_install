@@ -22,10 +22,10 @@ if ! echo "$PATH" | grep -q "$SCRIPT_DIR"; then
     # Generates a wrapper function in ~/.bashrc to handle 
     # Hognose (commands->scripts) that require eval for 'source'
     # So the command runs in the main shell rather than a subshell
-    # NEED TO CHANGE PATHING LATER FOR USER SPECIFIC PATH! (WSL ISSUES)
+    # For commands that don't need source it runs them as is
     echo "hognose() {
         local cmd
-        cmd=\$(/mnt/c/Users/louis/hognose/hognose \"\$@\")
+        cmd=\$($SCRIPT_DIR/hognose \"\$@\")
         if [[ \"\$1\" == \"activate\" ]]; then
             eval \"\$cmd\"
         elif [[ \"\$1\" == \"deactivate\" ]]; then
