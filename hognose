@@ -50,7 +50,7 @@ case "$COMMAND" in
                 ;;
             esac
         done
-        echo "source \"$HOG_DIR/$name/activate.sh\""
+        echo "source \"$HOG_DIR/envs/$name/activate.sh\""
     fi
     ;;
 
@@ -65,7 +65,26 @@ case "$COMMAND" in
                 ;;
             esac
         done
-        echo "source \"$HOG_DIR/$name/deactivate.sh\""
+        echo "source \"$HOG_DIR/envs/$name/deactivate.sh\""
     fi
     ;;
+
+    # Installs package
+    install)
+    shift
+    if [ $# -ge 1 ]; then
+        for PARAM in "$@" ; do
+            case $PARAM in
+                -n=*)
+                    name=${PARAM#*=}
+                    ;;
+                -v=*)
+                    version=${PARAM#*=}
+                    ;;
+            esac
+        done 
+        $HOG_DIR/packages/install_python.sh "$name" "$version" "$HOG_DIR"
+    fi
+    ;;
+
 esac
